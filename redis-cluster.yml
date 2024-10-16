@@ -1,0 +1,31 @@
+# Copyright Broadcom, Inc. All Rights Reserved.
+# SPDX-License-Identifier: APACHE-2.0
+
+services:
+  redis-0:
+    container_name: redis-0
+    image: redis:7.4
+    command: redis-server --maxmemory 1gb --maxmemory-policy allkeys-lru --port 6380 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --appendfilename appendonly-0.aof --cluster-announce-ip 172.17.1.8 --cluster-announce-port 6380 --cluster-announce-bus-port 16380
+    ports:
+      - "6380:6380"
+      - "16380:16380"
+
+  redis-1:
+    container_name: redis-1
+    image: redis:7.4
+    command: redis-server --maxmemory 1gb --maxmemory-policy allkeys-lru --port 6381 --cluster-enabled yes  --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --appendfilename appendonly-1.aof --cluster-announce-ip 172.17.1.8 --cluster-announce-port 6381 --cluster-announce-bus-port 16381
+    ports:
+      - "6381:6381"
+      - "16381:16381"
+
+  redis-2:
+    container_name: redis-2
+    image: redis:7.4
+    command: redis-server --maxmemory 1gb --maxmemory-policy allkeys-lru --port 6382 --cluster-enabled yes --cluster-config-file nodes.conf --cluster-node-timeout 5000 --appendonly yes --appendfilename appendonly-1.aof --cluster-announce-ip 172.17.1.8 --cluster-announce-port 6382 --cluster-announce-bus-port 16382
+    ports:
+      - "6382:6382"
+      - "16382:16382"
+
+networks:
+  default:
+    driver: bridge
